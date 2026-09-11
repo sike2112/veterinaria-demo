@@ -52,10 +52,10 @@ function Specialties() {
         {SPECIALTIES.map((item, index) => {
           const isActive = index === mobileActive
           return (
-            <div className="mobile-specialty" key={item.number}>
+            <div className={isActive ? 'mobile-specialty is-active' : 'mobile-specialty'} key={item.number}>
               <button
                 type="button"
-                className="mobile-specialty__row"
+                className={isActive ? 'mobile-specialty__row is-active' : 'mobile-specialty__row'}
                 aria-expanded={isActive}
                 onClick={() => setMobileActive(isActive ? -1 : index)}
               >
@@ -69,8 +69,12 @@ function Specialties() {
                   {item.number}
                 </span>
                 <span className="mobile-specialty__title">{item.title}</span>
-                <span className="mobile-specialty__icon" aria-hidden="true">
-                  {isActive ? '−' : '+'}
+                <span
+                  className={isActive ? 'mobile-specialty__icon is-active' : 'mobile-specialty__icon'}
+                  aria-hidden="true"
+                >
+                  <span className="mobile-specialty__icon-bar mobile-specialty__icon-bar--h" />
+                  <span className="mobile-specialty__icon-bar mobile-specialty__icon-bar--v" />
                 </span>
               </button>
 

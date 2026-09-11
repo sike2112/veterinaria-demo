@@ -635,6 +635,11 @@
 
 .mobile-specialty {
   border-bottom: 1px solid var(--line-inverse);
+  transition: border-color 200ms ease;
+}
+
+.mobile-specialty.is-active {
+  border-color: rgba(255, 201, 74, 0.45);
 }
 
 .mobile-specialty__row {
@@ -645,9 +650,15 @@
   padding: 20px 4px;
   background: none;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
   text-align: left;
   color: var(--text-inverse);
+  transition: background-color 200ms ease;
+}
+
+.mobile-specialty__row.is-active {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .mobile-specialty__number {
@@ -657,6 +668,7 @@
   font-weight: 800;
   font-size: 19px;
   color: rgba(255, 255, 255, 0.35);
+  transition: color 200ms ease;
 }
 
 .mobile-specialty__number.is-active {
@@ -671,13 +683,30 @@
 }
 
 .mobile-specialty__icon {
+  position: relative;
   flex-shrink: 0;
   width: 20px;
-  text-align: right;
-  font-size: 21px;
-  font-weight: 700;
-  color: var(--accent);
-  line-height: 1;
+  height: 20px;
+}
+
+.mobile-specialty__icon-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+  transition: transform 200ms ease;
+}
+
+.mobile-specialty__icon-bar--v {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.mobile-specialty__icon.is-active .mobile-specialty__icon-bar--v {
+  transform: translate(-50%, -50%) rotate(0deg);
 }
 
 .mobile-specialty__description {
@@ -1216,15 +1245,16 @@
   }
 }
 
-/* ============ Mobile: reliable content visibility ============ */
-/* whileInView-based fade-ins (Care photo, Process steps, Testimonials,
-   Location card) depend on IntersectionObserver timing, which is unreliable
-   on mobile browsers with a dynamic viewport (address bar show/hide). When
-   the observer never fires, the element stays at its initial opacity: 0 —
-   invisible, but still taking up its reserved layout space. Below this
-   breakpoint we force the resolved state so content is always visible and
-   in normal flow, without touching the desktop scroll-reveal behavior. */
-@media (max-width: 980px) {
+/* ============ Reveal fallback: reduced motion ============ */
+/* Care photo, Process steps, Testimonials and Location cards fade in via
+   Framer Motion's whileInView. MotionConfig(reducedMotion="user") already
+   makes Motion itself skip/simplify these for users with a reduced-motion
+   preference, but this is a CSS-level backstop: if that JS path is ever
+   bypassed, reduced-motion users still get the resolved, fully visible
+   state immediately rather than a stuck initial opacity. This does not
+   touch normal-motion users on any breakpoint — the scroll reveal plays
+   normally on both desktop and mobile. */
+@media (prefers-reduced-motion: reduce) {
   .care__media,
   .care__content,
   .process__steps li,

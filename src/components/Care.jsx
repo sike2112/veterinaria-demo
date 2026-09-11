@@ -15,8 +15,8 @@ function Care() {
           className="care__media"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.55 }}
+          viewport={{ once: true, amount: 0 }}
+          transition={{ duration: 0.55, ease: 'easeOut' }}
         >
           <span className="care__media-backdrop" aria-hidden="true" />
           <img

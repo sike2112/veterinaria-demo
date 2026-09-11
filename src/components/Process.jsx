@@ -16,8 +16,8 @@ function Process() {
               key={step.number}
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.4, delay: index * 0.06 }}
+              viewport={{ once: true, amount: 0 }}
+              transition={{ duration: 0.45, delay: index * 0.06, ease: 'easeOut' }}
             >
               <span className="process__number">{step.number}</span>
               <div>

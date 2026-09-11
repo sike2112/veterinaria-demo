@@ -26,8 +26,8 @@ function Testimonials() {
             className="testimonials__main"
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true, amount: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
           >
             <blockquote>
               <p>&ldquo;{TESTIMONIAL_MAIN.quote}&rdquo;</p>
@@ -41,8 +41,8 @@ function Testimonials() {
                 key={item.quote}
                 initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.45, delay: 0.1 + index * 0.08 }}
+                viewport={{ once: true, amount: 0 }}
+                transition={{ duration: 0.45, delay: 0.1 + index * 0.08, ease: 'easeOut' }}
               >
                 <blockquote>
                   <p>&ldquo;{item.quote}&rdquo;</p>
