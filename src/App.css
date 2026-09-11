@@ -748,12 +748,19 @@
   transform: rotate(90deg);
 }
 
-.mobile-specialty__panel {
-  overflow: hidden;
-}
-
 .mobile-specialty__description {
+  /* Deliberately static — no transition/transform/height animation of any
+     kind. This exact, animation-free structure (commit 7d56b0c) is what
+     fixed the flicker on Safari/iOS; any dynamic height control here (even
+     via a measured pixel value, not just `auto`) reintroduces it. */
   display: block;
+  position: static;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  height: auto;
+  max-height: none;
+  overflow: visible;
   margin: 0;
   padding: 0 4px 20px 44px;
   max-width: 60ch;

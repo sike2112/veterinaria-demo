@@ -77,19 +77,9 @@ function Specialties() {
                 </span>
               </button>
 
-              <AnimatePresence initial={false}>
-                {isActive && (
-                  <motion.div
-                    className="mobile-specialty__panel"
-                    initial={{ height: 0, opacity: 0, y: 6 }}
-                    animate={{ height: 'auto', opacity: 1, y: 0 }}
-                    exit={{ height: 0, opacity: 0, y: -4 }}
-                    transition={PANEL_TRANSITION}
-                  >
-                    <p className="mobile-specialty__description">{item.description}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {isActive ? (
+                <p className="mobile-specialty__description">{item.description}</p>
+              ) : null}
             </div>
           )
         })}
