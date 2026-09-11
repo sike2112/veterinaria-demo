@@ -531,22 +531,48 @@
 }
 
 .specialties__row {
+  position: relative;
   width: 100%;
   display: grid;
   grid-template-columns: 64px 1fr 32px;
   align-items: center;
   gap: 18px;
-  padding: 26px 4px;
+  padding: 26px 4px 26px 20px;
   background: none;
   border: none;
   cursor: pointer;
   text-align: left;
   color: var(--text-inverse);
-  transition: background-color 0.2s ease;
+  transition: background-color 0.25s ease, transform 0.15s ease;
+}
+
+.specialties__row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 0;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: translateY(-50%);
+  transition: height 0.25s ease;
 }
 
 .specialties__row:hover {
   background: rgba(255, 255, 255, 0.06);
+}
+
+.specialties__row:active {
+  transform: scale(0.995);
+}
+
+.is-active .specialties__row {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.is-active .specialties__row::before {
+  height: 60%;
 }
 
 .specialties__number {
@@ -554,7 +580,7 @@
   font-weight: 800;
   font-size: clamp(24px, 2.6vw, 34px);
   color: rgba(255, 255, 255, 0.35);
-  transition: color 0.2s ease;
+  transition: color 0.25s ease;
 }
 
 .is-active .specialties__number {
@@ -565,6 +591,11 @@
   font-family: var(--display);
   font-weight: 700;
   font-size: clamp(18px, 2vw, 22px);
+  transition: transform 0.25s ease;
+}
+
+.is-active .specialties__title {
+  transform: translateX(4px);
 }
 
 .specialties__icon {
@@ -573,10 +604,16 @@
   color: var(--accent);
   justify-self: end;
   line-height: 1;
+  transition: transform 0.25s ease;
+  transform-origin: center;
+}
+
+.is-active .specialties__icon {
+  transform: rotate(90deg);
 }
 
 .specialties__panel {
-  display: block;
+  overflow: hidden;
 }
 
 .specialties__panel-inner {
@@ -635,7 +672,7 @@
 
 .mobile-specialty {
   border-bottom: 1px solid var(--line-inverse);
-  transition: border-color 200ms ease;
+  transition: border-color 0.25s ease;
 }
 
 .mobile-specialty.is-active {
@@ -654,11 +691,19 @@
   cursor: pointer;
   text-align: left;
   color: var(--text-inverse);
-  transition: background-color 200ms ease;
+  transition:
+    background-color 0.25s ease,
+    padding-left 0.25s ease,
+    transform 0.15s ease;
 }
 
-.mobile-specialty__row.is-active {
+.mobile-specialty__row:active {
+  transform: scale(0.99);
+}
+
+.mobile-specialty.is-active .mobile-specialty__row {
   background: rgba(255, 255, 255, 0.06);
+  padding-left: 10px;
 }
 
 .mobile-specialty__number {
@@ -668,10 +713,10 @@
   font-weight: 800;
   font-size: 19px;
   color: rgba(255, 255, 255, 0.35);
-  transition: color 200ms ease;
+  transition: color 0.25s ease;
 }
 
-.mobile-specialty__number.is-active {
+.mobile-specialty.is-active .mobile-specialty__number {
   color: var(--accent);
 }
 
@@ -680,44 +725,35 @@
   font-family: var(--display);
   font-weight: 700;
   font-size: 16.5px;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.mobile-specialty.is-active .mobile-specialty__title {
+  transform: translateX(4px);
 }
 
 .mobile-specialty__icon {
-  position: relative;
   flex-shrink: 0;
   width: 20px;
-  height: 20px;
+  text-align: right;
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  transition: transform 0.25s ease, color 0.25s ease;
+  transform-origin: center;
 }
 
-.mobile-specialty__icon-bar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 14px;
-  height: 2px;
-  border-radius: 1px;
-  background: var(--accent);
-  transform: translate(-50%, -50%);
-  transition: transform 200ms ease;
+.mobile-specialty.is-active .mobile-specialty__icon {
+  transform: rotate(90deg);
 }
 
-.mobile-specialty__icon-bar--v {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.mobile-specialty__icon.is-active .mobile-specialty__icon-bar--v {
-  transform: translate(-50%, -50%) rotate(0deg);
+.mobile-specialty__panel {
+  overflow: hidden;
 }
 
 .mobile-specialty__description {
   display: block;
-  position: static;
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  height: auto;
-  max-height: none;
-  overflow: visible;
   margin: 0;
   padding: 0 4px 20px 44px;
   max-width: 60ch;

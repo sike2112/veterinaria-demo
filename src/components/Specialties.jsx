@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import { SPECIALTIES, MESSAGES } from '../data/content.js'
 import { openWhatsApp } from '../utils/whatsapp.js'
+
+const PANEL_TRANSITION = { duration: 0.4, ease: 'easeOut' }
 
 function Specialties() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -33,13 +36,21 @@ function Specialties() {
                 </span>
               </button>
 
-              {isActive && (
-                <div className="specialties__panel">
-                  <div className="specialties__panel-inner">
-                    <p>{item.description}</p>
-                  </div>
-                </div>
-              )}
+              <AnimatePresence initial={false}>
+                {isActive && (
+                  <motion.div
+                    className="specialties__panel"
+                    initial={{ height: 0, opacity: 0, y: 6 }}
+                    animate={{ height: 'auto', opacity: 1, y: 0 }}
+                    exit={{ height: 0, opacity: 0, y: -4 }}
+                    transition={PANEL_TRANSITION}
+                  >
+                    <div className="specialties__panel-inner">
+                      <p>{item.description}</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </li>
           )
         })}
@@ -55,32 +66,30 @@ function Specialties() {
             <div className={isActive ? 'mobile-specialty is-active' : 'mobile-specialty'} key={item.number}>
               <button
                 type="button"
-                className={isActive ? 'mobile-specialty__row is-active' : 'mobile-specialty__row'}
+                className="mobile-specialty__row"
                 aria-expanded={isActive}
                 onClick={() => setMobileActive(isActive ? -1 : index)}
               >
-                <span
-                  className={
-                    isActive
-                      ? 'mobile-specialty__number is-active'
-                      : 'mobile-specialty__number'
-                  }
-                >
-                  {item.number}
-                </span>
+                <span className="mobile-specialty__number">{item.number}</span>
                 <span className="mobile-specialty__title">{item.title}</span>
-                <span
-                  className={isActive ? 'mobile-specialty__icon is-active' : 'mobile-specialty__icon'}
-                  aria-hidden="true"
-                >
-                  <span className="mobile-specialty__icon-bar mobile-specialty__icon-bar--h" />
-                  <span className="mobile-specialty__icon-bar mobile-specialty__icon-bar--v" />
+                <span className="mobile-specialty__icon" aria-hidden="true">
+                  {isActive ? '−' : '+'}
                 </span>
               </button>
 
-              {isActive ? (
-                <p className="mobile-specialty__description">{item.description}</p>
-              ) : null}
+              <AnimatePresence initial={false}>
+                {isActive && (
+                  <motion.div
+                    className="mobile-specialty__panel"
+                    initial={{ height: 0, opacity: 0, y: 6 }}
+                    animate={{ height: 'auto', opacity: 1, y: 0 }}
+                    exit={{ height: 0, opacity: 0, y: -4 }}
+                    transition={PANEL_TRANSITION}
+                  >
+                    <p className="mobile-specialty__description">{item.description}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           )
         })}
